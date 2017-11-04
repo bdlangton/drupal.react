@@ -1,0 +1,87 @@
+{
+  "name": "myplanet/skeletor",
+  "description": "Skeletor Install Profile with composer",
+  "authors": [{
+    "name": "Myplanet",
+    "email": "hello@myplanet.com"
+  }],
+  "type": "project",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.0.20",
+    "drupal-composer/drupal-scaffold": "^2.0.1",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "~8.0",
+    "drush/drush": "~8.0",
+    "drupal/console": "~1.0",
+    "webflo/drupal-finder": "^1.0",
+    "drupal/admin_toolbar": "1.20",
+    "drupal/openapi": "^1.0@alpha",
+    "drupal/restui": "^1.15",
+    "drupal/devel": "^1.2"
+  },
+  "require-dev": {},
+  "conflict": {
+    "drupal/drupal": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php",
+      "scripts/skeletor/ProductionBuild.php",
+      "scripts/skeletor/NpmPackage.php"
+    ]
+  },
+  "scripts": {
+    "deploy": [
+      "@composer install --prefer-dist --no-dev",
+      "DrupalSkeletor\\ProductionBuild::placeGitIgnore",
+      "DrupalSkeletor\\ProductionBuild::removeGitFolders"
+    ],
+    "npm-install": "DrupalSkeletor\\NpmPackage::npmInstall",
+    "npm-build": "DrupalSkeletor\\NpmPackage::npmBuild",
+    "npm-test": "DrupalSkeletor\\NpmPackage::npmTest",
+    "pre-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ],
+    "pre-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ],
+    "post-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+      "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+      "@composer npm-install",
+      "@composer npm-build"
+    ],
+    "post-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+      "@composer npm-install",
+      "@composer npm-build"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "docroot/core": ["type:drupal-core"],
+      "docroot/libraries/contrib/{$name}": ["type:drupal-library"],
+      "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+      "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
+      "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
+      "drush/contrib/{$name}": ["type:drupal-drush"],
+      "docroot/modules/npm-packages/{$name}": ["type:npm-package"]
+    },
+    "installer-types": ["npm-package"],
+    "patches": {},
+    "drupal-scaffold": {
+      "excludes": [
+        "web.config",
+        "sites/default/default.settings.php"
+      ]
+    }
+  }
+}

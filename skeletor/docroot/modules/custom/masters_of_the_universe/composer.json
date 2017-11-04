@@ -1,0 +1,14 @@
+{
+  "name": "drupal/masters_of_the_universe",
+  "type": "drupal-module",
+  "description": "My Awesome Module",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/masters_of_the_universe",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/masters_of_the_universe",
+    "source": "http://cgit.drupalcode.org/masters_of_the_universe"
+  },
+  "require": { }
+}

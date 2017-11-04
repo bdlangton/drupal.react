@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains masters_of_the_universe.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function masters_of_the_universe_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the masters_of_the_universe module.
+    case 'help.page.masters_of_the_universe':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
